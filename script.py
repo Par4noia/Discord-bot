@@ -12,9 +12,7 @@ from discord.utils import get
 from itertools import cycle
 
 bot = commands.Bot(command_prefix="!")
-status = cycle(['Под кайфом', 'Отдыхаю', 'Lands of Ilya bots', 
-'Niggerland',
-                'Aye Simulator'])
+status = cycle(['Под кайфом', 'Отдыхаю', 'Lands of Ilya bots', 'Niggerland', 'Aye Simulator'])
 players = {}
 ban_msg = ['']
 bot.remove_command('help')
@@ -77,8 +75,7 @@ async def unban(ctx, *, member):
     for ban_entry in banned_users:
         user = ban_entry.user
 
-        if(user.name, user.discriminator) == (member_name, 
-member_discriminator):
+        if(user.name, user.discriminator) == (member_name, member_discriminator):
             await ctx.guild.unban(user)
             await ctx.send(f'{user.mention} разбанен.')
             return
@@ -115,8 +112,7 @@ async def random(ctx, left: int, right: int):
 async def on_member_join(member):
     for channel in member.guild.channels:
         if str(channel) == "general": 
-            await channel.send_message(f"Добро пожаловать на сервер, 
-{member.mention}")
+            await channel.send_message(f"Добро пожаловать на сервер, {member.mention}")
 
 
 @bot.command()
@@ -188,8 +184,7 @@ async def play(ctx, *, search):
     htm_content = urllib.request.urlopen(
         'http://www.youtube.com/results?' + query_srting
     )
-    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', 
-htm_content.read().decode())
+    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', htm_content.read().decode())
     url = 'http://www.youtube.com/watch?v=' + search_results[0]
 
     def check_queue():
@@ -205,8 +200,7 @@ htm_content.read().decode())
                 queues.clear()
                 return
             main_location = os.path.dirname(os.path.realpath(__file__))
-            song_path = os.path.abspath(os.path.realpath("Queue") + "\\" + 
-first_file)
+            song_path = os.path.abspath(os.path.realpath("Queue") + "\\" + first_file)
             if length != 0:
                 print("Song done, playing next queued\n")
                 print(f"Songs still in queue: {still_q}")
@@ -218,8 +212,7 @@ first_file)
                     if file.endswith(".mp3"):
                         os.rename(file, 'song.mp3')
 
-                voice.play(discord.FFmpegPCMAudio("song.mp3"), 
-after=lambda e: check_queue())
+                voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
                 voice.source = discord.PCMVolumeTransformer(voice.source)
                 voice.source.volume = 0.07
 
@@ -229,8 +222,7 @@ after=lambda e: check_queue())
 
         else:
             queues.clear()
-            print("No songs were queued before the ending of the last 
-song\n")
+            print("No songs were queued before the ending of the last song\n")
 
 
 
@@ -273,8 +265,7 @@ song\n")
             print("Downloading audio now\n")
             ydl.download([url])
     except:
-        print("FALLBACK: youtube-dl does not support this URL, using 
-Spotify (This is normal if Spotify URL)")
+        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if Spotify URL)")
         c_path = os.path.dirname(os.path.realpath(__file__))
         system("spotdl -f " + '"' + c_path + '"' + " -s " + url)
     for file in os.listdir("./"):
@@ -283,8 +274,7 @@ Spotify (This is normal if Spotify URL)")
             print(f"Renamed File: {file}\n")
             os.rename(file, "song.mp3")
 
-    voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: 
-check_queue())
+    voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: check_queue())
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = 0.07
 
@@ -352,8 +342,7 @@ async def playnext(ctx, *, search):
     htm_content = urllib.request.urlopen(
         'http://www.youtube.com/results?' + query_srting
     )
-    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', 
-htm_content.read().decode())
+    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', htm_content.read().decode())
     url = 'http://www.youtube.com/watch?v=' + search_results[0]
 
     Queue_infile = os.path.isdir("./Queue")
@@ -370,8 +359,7 @@ htm_content.read().decode())
             add_queue = False
             queues[q_num] = q_num
 
-    queue_path = os.path.abspath(os.path.realpath("Queue") + 
-f"\song{q_num}.%(ext)s")
+    queue_path = os.path.abspath(os.path.realpath("Queue") + f"\song{q_num}.%(ext)s")
 
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -388,11 +376,9 @@ f"\song{q_num}.%(ext)s")
             print("Downloading audio now\n")
             ydl.download([url])
     except:
-        print("FALLBACK: youtube-dl does not support this URL, using 
-Spotify (This is normal if Spotify URL)")
+        print("FALLBACK: youtube-dl does not support this URL, using Spotify (This is normal if Spotify URL)")
         q_path = os.path.abspath(os.path.realpath("Queue"))
-        system(f"spotdl -ff song{q_num} -f " + '"' + q_path + '"' + " -s " + 
-url)
+        system(f"spotdl -ff song{q_num} -f " + '"' + q_path + '"' + " -s " + url)
 
 
     await ctx.send("Adding song " + str(q_num) + " to the queue")
@@ -421,14 +407,10 @@ async def searchsong(ctx, *, search):
     htm_content = urllib.request.urlopen(
         'http://www.youtube.com/results?' + query_srting
     )
-    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', 
-htm_content.read().decode())
-    await ctx.send('http://www.youtube.com/watch?v=' + 
-search_results[0])
-    await ctx.send('http://www.youtube.com/watch?v=' + 
-search_results[1])
-    await ctx.send('http://www.youtube.com/watch?v=' + 
-search_results[2])
+    search_results = re.findall('href=\"\\/watch\\?v=(.{11})', htm_content.read().decode())
+    await ctx.send('http://www.youtube.com/watch?v=' + search_results[0])
+    await ctx.send('http://www.youtube.com/watch?v=' + search_results[1])
+    await ctx.send('http://www.youtube.com/watch?v=' + search_results[2])
 
 
 @bot.command(pass_context=True, aliases=['v', 'vol'])
@@ -459,21 +441,14 @@ async def embedt(ctx):
         description="This is a test"
     )
 
-    embed.set_author(name="Author", 
-icon_url="https://cdn.discordapp.com/attachments/443208943213477889/60169
-9371221909504/imagesfidosfhdis.jpg")
+    embed.set_author(name="Author", icon_url="https://cdn.discordapp.com/attachments/443208943213477889/601699371221909504/imagesfidosfhdis.jpg")
     
-embed.set_image(url="https://cdn.discordapp.com/attachments/4432089432134
-77889/601699371221909504/imagesfidosfhdis.jpg")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/443208943213477889/601699371221909504/imagesfidosfhdis.jpg")
     
-embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/4432089432
-13477889/601699371221909504/imagesfidosfhdis.jpg")
-    embed.add_field(name="ping", value="This has the bot say pong", 
-inline=False)
-    embed.add_field(name="Test Field 2", value="this is test 2", 
-inline=False)
-    embed.add_field(name="test field 3", value="This is a test 3", 
-inline=False)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/443208943213477889/601699371221909504/imagesfidosfhdis.jpg")
+    embed.add_field(name="ping", value="This has the bot say pong", inline=False)
+    embed.add_field(name="Test Field 2", value="this is test 2", inline=False)
+    embed.add_field(name="test field 3", value="This is a test 3", inline=False)
     embed.set_footer(text="This is a footer")
 
     await ctx.send(embed=embed)
@@ -486,42 +461,24 @@ async def help(ctx):
         colour=discord.Colour.orange()
     )
     test_e.set_author(name="Префикс бота = !")
-    test_e.add_field(name="!hello", value="Данная функция отправляет 
-приветствие юзеру.", inline=False)
-    test_e.add_field(name="!ping", value="Данная функция отправляет 
-пинг юзера.")
-    test_e.add_field(name="!clear", value="Данная функция очищает 
-терминал.")
-    test_e.add_field(name="!kick", value="Данная функция исключает 
-юзера из сервера.")
-    test_e.add_field(name="!ban", value="Данная функция блокирует 
-юзеру доступ к серверу.")
-    test_e.add_field(name="!unban", value="Данная функция 
-разблокирует юзеру доступ к серверу.")
-    test_e.add_field(name="!mute", value="Данная функция заглушает 
-юзера.")
-    test_e.add_field(name="!question", value="Данная функция 
-отправляет ответ на заданный вопрос.")
-    test_e.add_field(name="!join", value="Данная функция 
-присоединяет бота к каналу.")
-    test_e.add_field(name="!leave", value="Данная функция 
-отсоединяет бота от канала.")
-    test_e.add_field(name="!play", value="Данная функция включает 
-музыкального бота.")
-    test_e.add_field(name="!pause", value="Данная функция ставит 
-музыкального бота на паузу.")
-    test_e.add_field(name="!resume", value="Данная функция 
-возобновляет воспроизведение музыки.")
-    test_e.add_field(name="!stop", value="Данная функция 
-останавливает воспроизведение музыки.")
-    test_e.add_field(name="!playnext", value="Данная функция заносит 
-в плейлист следующую песню.")
-    test_e.add_field(name="!skip", value="Данная функция пропускает 
-песню.")
-    test_e.add_field(name="!searchsong", value="Данная функция 
-отправляет юзеру 3 песни по заданному ему запросу.")
-    test_e.add_field(name="!volume", value="Данная функция 
-позволяет изменять громкость музыкального бота.")
+    test_e.add_field(name="!hello", value="Данная функция отправляет приветствие юзеру.", inline=False)
+    test_e.add_field(name="!ping", value="Данная функция отправляет пинг юзера.")
+    test_e.add_field(name="!clear", value="Данная функция очищает терминал.")
+    test_e.add_field(name="!kick", value="Данная функция исключает юзера из сервера.")
+    test_e.add_field(name="!ban", value="Данная функция блокирует юзеру доступ к серверу.")
+    test_e.add_field(name="!unban", value="Данная функция разблокирует юзеру доступ к серверу.")
+    test_e.add_field(name="!mute", value="Данная функция заглушает юзера.")
+    test_e.add_field(name="!question", value="Данная функция отправляет ответ на заданный вопрос.")
+    test_e.add_field(name="!join", value="Данная функция присоединяет бота к каналу.")
+    test_e.add_field(name="!leave", value="Данная функция отсоединяет бота от канала.")
+    test_e.add_field(name="!play", value="Данная функция включает музыкального бота.")
+    test_e.add_field(name="!pause", value="Данная функция ставит музыкального бота на паузу.")
+    test_e.add_field(name="!resume", value="Данная функция возобновляет воспроизведение музыки.")
+    test_e.add_field(name="!stop", value="Данная функция останавливает воспроизведение музыки.")
+    test_e.add_field(name="!playnext", value="Данная функция заносит в плейлист следующую песню.")
+    test_e.add_field(name="!skip", value="Данная функция пропускает песню.")
+    test_e.add_field(name="!searchsong", value="Данная функция отправляет юзеру 3 песни по заданному ему запросу.")
+    test_e.add_field(name="!volume", value="Данная функция позволяет изменять громкость музыкального бота.")
     await author.send(embed=test_e)
 
 @bot.event
@@ -529,3 +486,6 @@ async def on_member_join(member):
     role = get(member.guild.roles, name=ROLE)
     await member.add_roles(role)
     print(f"{member} была выдана роль {role}")
+
+                     
+bot.run("NjQxMzY4ODU1NDA2NDQ0NTY0.Xe_bjQ.sYcTjwKpC5E_Nmgx7tBu2r59xO8")
